@@ -4,50 +4,41 @@
  * @return {number[]}
  */
 
- //O(n)
- var topKFrequent = function(nums, k) {
-    const map={} 
-    let bucket = []
-    let result = []
+//O(n)
+var topKFrequent = function(nums, k) {
+    const freqMap ={}
+    const bucket = []
+    const result =[]
 
-    //Create Frequency Map
-    for(let i=0;i<nums.length;i++){
-        //If value exists as a key in map
-        if(map[ nums[i] ]!= undefined){
-            //Increment the frequency counter
-            map[ nums[i] ]++
+    //FreqMap for key(num):value(freq)
+    for(let i=0; i<nums.length;i++){
+        if(!freqMap[i]){ 
+            freqMap[ nums[i] ] = 1 //freq starts at 1 occurence
         }else{
-            //Create a new key:value (freq = 1) pair in freq map
-            map[ nums[i] ] = 1
+            freqMap[ nums[i] ]++
         }
     }
 
-    //Populate the bucket with freq map in preparation for bucket sort
-    for (const [num, freq] of Object.entries(map) ){ //for of to iterate over key:value pairs objects
-        //If bucket cannot be found, 
+    //Bucket Sort with an array of [...index(freq):value([num#, num#])] per freq
+    for(const [num, freq] of Object.entries(freqMap)){
         if(!bucket[freq]){
-            //Create a new bucket to hold the number corresponding to its freq
-            bucket[freq]  = new Set().add(num) // bucket[freq => 2 =>occurences] = [ [#1] ] 
+            bucket[freq] = new Set().add(num)
         }else{
-            //Bucket is not empty, replace buckey with a new # to the old freq bucket
-            bucket[freq] =  bucket[freq].add(num) // bucket[freq => 2 =>occurences] = [ [#1, #2] ] 
-                                                    // bucket[freq => 1 =>occurences] = [   [#3] ]
+            bucket[freq].add(num)
         }
-                
     }
-    
 
-    //Return k most frequent elements by iterating through bucket starting from right end.
-    for(let i=bucket.length-1; i>0;i--){ // 5, 5>0; 4// 4;4>0;3
-        //If bucket exists, pust k most element into result arr
-        if(bucket[i]){
+    //Print the solution by looping from last el in array(most freq)
+        //Break loop when length of answer array/object == k
+    for(let i=bucket.length -1; i>=0;i++){
+        if(bucket[i]){//If bucket exists
             result.push(...bucket[i])
         }
 
-        //Stop accepting results once we get "k" # of elements
-        if(result.length === k) break
-        
-    }return result
+        if(result.length === k) break //Once k # of results is reached, break loop
+    }
+
+    return result
 
 };
 /*
@@ -70,6 +61,6 @@ Count/Index  |  0   1    2   3   4
              |
     buckets  | []  [3,6]   [2]  [1]  []
 
-Loop from ends of array, k++ & break loop once k=# is reached.
+Loop from end of array, k++ & break loop once k=# is reached.
 
 */
