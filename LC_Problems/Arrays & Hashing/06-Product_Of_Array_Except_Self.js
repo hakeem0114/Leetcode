@@ -30,7 +30,7 @@
  * @param {number[]} nums
  * @return {number[]}
  */
- // O(n^2)
+ // O(n^2) - update 2 arrays
  var productExceptSelf = function(nums) {
     //nums = [1,2,3,4]
     //answer =[]
