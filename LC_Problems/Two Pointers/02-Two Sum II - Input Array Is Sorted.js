@@ -1,3 +1,6 @@
+//Redo with (2) pointers
+
+
 /**
  * @param {number[]} numbers
  * @param {number} target
