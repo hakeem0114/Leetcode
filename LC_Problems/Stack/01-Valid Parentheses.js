@@ -2,6 +2,8 @@
  * @param {string} s
  * @return {boolean}
  */
+
+//O(n)
 var isValid = function(s) {
     //Since the inputs must be closed in correct order, use a stack
         //Is a valid parenthesis once the stack has pop off all open tags

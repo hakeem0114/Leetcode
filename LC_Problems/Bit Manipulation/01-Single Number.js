@@ -10,9 +10,17 @@ var singleNumber = function(nums) {
     for(let i=0;i<nums.length;i++){
         // 1 = 01, 2 =10, 3 =11, 4 =100
         //nums = [2,2,1]
-        //  ^= 0 XOR 10 = 10 (number appears once) = 2
-        //  ^= 10 XOR 10 = 00 (Number appears twice)  = 0
-        // 01 XOR 00 = 10 (number appears once)
+        /*
+            Truth Table: 
+            x2 x1  = Q
+            0   0   0
+            0   1   1
+            1   0   1
+            1   1   0
+
+           Therefore, a repeating number will have the same binary values & 
+           an XOR value of 0
+        */
         xorNum ^= nums[i]
     } return xorNum  //Returns the last number that appears once the loop ends
 };
