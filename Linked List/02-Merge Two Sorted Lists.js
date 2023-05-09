@@ -10,34 +10,32 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
-
-//O(n)
 var mergeTwoLists = function(list1, list2) {
-    let dummy = new ListNode(0) //New instance of node with value of 0
-    let head = dummy
+    let dummy = new ListNode(0) //dummy node with val of 0 (use ListNode in Leetcode instead of new Node(0)
+    let head = dummy //Updates dummy to use head.next as return statement
 
-    //Takes 1st value of list2 & sorts it with rest of list1
-    while(list1 && list2){
-        //Since both list are sorted, connect next node if its value is +1 more than the prev
+    while(list1 && list2){ //!= null, keep looping
 
-        if(list1.val <= list2.val){
+        if(list1.val < list2.val){
+            //Start merging from list1
             dummy.next = list1
-            list1 = list1.next //Move for next iteration
+            list1 = list1.next
         }else{
             dummy.next = list2
             list2 = list2.next
         }
 
-        //Update dummy value (move to next pointer)
-        dummy= dummy.next
+        //Increment dummy to next node
+        dummy = dummy.next
     }
 
-    //Append rest of sorted list2 to combines list OR could be vice verca
-    if(list1){
+   //Account for the list1 or list2 are not of equal size so the while loop will leave some extra nodes
+   //Appends to end of list
+    if(list1){ //if(list1!= null)
         dummy.next = list1
     }else{
         dummy.next = list2
-    }
+    } 
 
-return head.next
+   return head.next //Return globally update head.next
 };
