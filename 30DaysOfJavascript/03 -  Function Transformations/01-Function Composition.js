@@ -8,16 +8,16 @@
 // same as passing in the functions' call into another in reverse
 
 //Imperative 
-// var compose = function(functions) {
-// 	return function(x) { //x is passed as an arg into prev functions
+var compose = function(functions) {
+	return function(x) { //x is passed as an arg into prev functions
 
-//         //Call functions in reverse & pass them into the prev
-//          for(let func of functions.reverse()){
-//             x = func(x) //Aggregates function calls
-//          }
-//          return x //Return totalAggregate
-//     }
-// };
+        //Call functions in reverse & pass them into the prev
+         for(let func of functions.reverse()){
+            x = func(x) //Aggregates function calls
+         }
+         return x //Return totalAggregate
+    }
+};
 
 //Declarative way with .reduce()
 var compose = function(functions) {

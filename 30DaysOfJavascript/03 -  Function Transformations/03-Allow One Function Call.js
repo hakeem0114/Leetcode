@@ -13,7 +13,7 @@ var once = function(fn) {
     }
 };
 
-//Binding Way **IN PROGRESS**
+//Binding Way *
 var once = function(fn) {
 
     return function(...args){
