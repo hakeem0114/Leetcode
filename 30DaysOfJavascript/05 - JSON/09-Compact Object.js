@@ -5,60 +5,48 @@
 var compactObject = function(obj) { 
 
     //Edge Cases
-    if(!obj)return false
-    if(obj[0])return obj
+    if(!obj)return false 
+   // if(obj[0])return obj
 
     
-    function arrCheck(obj){
+    function nestCheck(obj){
         //Check if arr
-        if(Array.isArray(obj)){
-            for(let i=0;i<obj.length;i++){
-                let el = obj[i]
+        if(Array.isArray(obj)){ //ex3
+            const newArr = [] //[5,[], [16]]
 
-                //Handled nested arr
-                if(Array.isArray(obj)){
-                    arrCheck(el,i)
+            //Iterates over arr
+            obj.map((el,i)=>{ // [null, 0, 5, [0], [false, 16]], 
+                if(el){ //5, [0], [false, 16]
+                    newArr.push(nestCheck(el)) //5.push([]), [removes 0].push([5,]), [16].push([5,[], ]) 
                 }
+            })
 
-                //Delete falsy value
-                if(!Boolean(el)){
-                    obj.splice(i,1)
-                    i-- //Update i to reflect new array length
-                }
-
-                //Handled nested obj
-                if(typeof obj === 'object'){
-                    objCheck(el)
-                }
-            }
-        }      
-    }
-
-    function objCheck(obj){
+            return newArr
+        }
+        
         //Check if obj
-        if(typeof obj === 'object'){
+        if(typeof obj === 'object'){//Object with JSON => key:value pairs
+            const newObj = {}
+
+            //Iterates over obj
             for(let i in obj){
 
-                //Handled nested arr
-                if(Array.isArray(obj)){
-                    arrCheck(obj[i],i)
-                }
-
-                //Handled nested obj
-                if(typeof obj === 'object'){
-                    objCheck(obj)
-                }
-
-                //Delete falsy key:value pairs
-                if(!Boolean(obj[i])){
-                    delete obj[i]
+                //Store key:value pairs with a truthy value
+                if(obj[i]){
+                    newObj[i] = nestCheck(obj[i])
                 }
             }
+
+            return newObj
         }
+
+        //If either, 
+        if(obj){
+            return obj
+        }
+
     }
 
-    arrCheck(obj)
-//    objCheck(obj)
+    return nestCheck(obj)
 
-    return obj
 };
