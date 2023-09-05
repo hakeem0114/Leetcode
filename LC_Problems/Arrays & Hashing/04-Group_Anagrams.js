@@ -3,6 +3,75 @@
  * @return {string[][]}
  */
 
+ //T: O(n^2)
+ var groupAnagrams = function(strs) {
+
+    //Edge Case 1: Empty & single word
+    if(strs.length < 2){
+        return [strs]
+    }
+
+    //Format of word Map
+        // let wordMap = {
+        //     '987':[ ate, ],
+        //      '':[]
+        // }
+    let wordMap = {}
+
+
+    //Populate wordMap
+    for(let word of strs){
+
+        //Count for each lower case alphabet in string value
+        //26 letters in alpha
+        //Map a->index[0], z->index[25] using ASCII charCodeAt(index) using a freqArrayforAlphaCount
+            // charCodeAt('a') =97 so, 
+                /* Test: 0-25 (26 alphabets)
+                    if char=a, mapped value: charCodeAt(char) - charCodeAt('a') => count =0
+                    if char=c, mapped value: charCodeAt(char) - charCodeAt('a') => count =2
+                    if char=z, mapped value: charCodeAt(char) - charCodeAt('a') => count =25
+                */
+        // alphabetCount = [0,0,0,0,0,0,0,0,0...25th index]
+
+        //Create freqArray
+        let alphabetCount = new Array(26).fill(0) //Fill arr with 26 empty zeroes (26 alpha)
+                                   
+
+        //Update freqArray to show the num of char in each string
+        for(let i=0;i<word.length;i++){
+            let alphaIndex = word.charCodeAt(i) - 'a'.charCodeAt(0) 
+            //array key is better than the ascii sum
+
+            alphabetCount [alphaIndex] += 1   //Increment count of alpha if seen again  
+            //console.log(alphaIndex)
+           // console.log(alphabetCount)
+        }
+
+        //Group anagrams in map with key(alphaCount):value([grouped anagrams])
+            
+            //console.log(wordMap)
+            //Check if anagram is in map
+            if(wordMap[alphabetCount]){
+                //Add to array group
+                wordMap[alphabetCount].push(word)
+            }else{
+                //New: Make new key:value
+
+                wordMap[alphabetCount] = [word]
+            }       
+    }
+
+    //Get values from wordMap & return 
+    return Object.values(wordMap)   
+};
+
+
+
+/**
+ * @param {string[]} strs
+ * @return {string[][]}
+ */
+
 
  //O(n wlognw)
  var groupAnagrams = function(strs) {

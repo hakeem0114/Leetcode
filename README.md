@@ -1,3 +1,3 @@
 # Leetcode
 
-- Currently reading cracking the coding interview to prep
+- Currently studying for interviews
